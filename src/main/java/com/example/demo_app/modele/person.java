@@ -17,7 +17,17 @@ public class person {
     @Column(columnDefinition = "varchar(50)", nullable = false)
     public String lastname;
 
-    @ManyToMany(mappedBy = "linkedPerson")
+    @ManyToMany(mappedBy = "linkedPerson", fetch = FetchType.EAGER)
     Set<animal> animals;
 
+    @Override
+    public String toString() {
+        return "person{" +
+                "id=" + id +
+                ", age=" + age +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", animals=" + animals +
+                '}';
+    }
 }

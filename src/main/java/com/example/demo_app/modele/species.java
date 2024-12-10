@@ -16,7 +16,17 @@ public class species {
     @Column(columnDefinition = "varchar(50)", nullable = false, name = "latin_name")
     public String latinName;
 
-    @OneToMany(mappedBy = "specie")
+    @OneToMany(mappedBy = "specie", fetch = FetchType.EAGER)
     private Set<animal> animals;
 
+
+    @Override
+    public String toString() {
+        return "species{" +
+                "id=" + id +
+                ", commonName='" + commonName + '\'' +
+                ", latinName='" + latinName + '\'' +
+                ", animals=" + animals +
+                '}';
+    }
 }

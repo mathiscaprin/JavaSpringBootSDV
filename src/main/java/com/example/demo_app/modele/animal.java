@@ -1,6 +1,7 @@
 package com.example.demo_app.modele;
 
 import jakarta.persistence.*;
+import org.springframework.core.style.ToStringCreator;
 
 import java.util.Set;
 
@@ -24,7 +25,19 @@ public class animal {
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     Set<person> linkedPerson;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "species_id", insertable = false, updatable = false)
+
     private species specie;
+
+
+    @Override
+    public String toString() {
+        return "animal{" +
+                "id=" + id +
+                ", color='" + color + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
 }

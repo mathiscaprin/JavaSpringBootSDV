@@ -13,5 +13,4 @@ public interface SpeciesRepository extends CrudRepository<species,Integer> {
 
     public Set<species> findAllByLatinNameContainsIgnoreCase(String LatinName);
 
-
 }
