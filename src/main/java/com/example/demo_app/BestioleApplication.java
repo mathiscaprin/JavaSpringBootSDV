@@ -5,6 +5,7 @@ import com.example.demo_app.modele.species;
 import com.example.demo_app.repository.AnimalRepository;
 import com.example.demo_app.repository.PersonRepository;
 import com.example.demo_app.repository.SpeciesRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -36,7 +37,7 @@ public class BestioleApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		species spicies =  this.speciesRepository.findFirstByCommonName("Chien");
 		animal animal = this.animalRepository.findFirstById(1);
-		System.out.println("Toutes les entités Person : " + this.personRepository.findAll());
+		/*System.out.println("Toutes les entités Person : " + this.personRepository.findAll());
 		System.out.println("Animal par lastname : " + this.animalRepository.findAllByName("Loulou"));
 		System.out.println("Espèce par name : " + this.speciesRepository.findFirstByCommonName("Chien"));
 		System.out.println("Espèce par latinname : " + this.speciesRepository.findAllByLatinNameContainsIgnoreCase("lupus"));
@@ -51,7 +52,10 @@ public class BestioleApplication implements CommandLineRunner {
 		System.out.println("Toutes espece LIKE commonName: " + this.speciesRepository.findAllByCommonNameLike("Ch%"));
 
 		System.out.println("Animal par sex : " + this.animalRepository.countAllBySex("M"));
-		System.out.println("Appartient à une personne : " + this.animalRepository.existsByAnimal(animal));
+		System.out.println("Appartient à une personne : " + this.animalRepository.existsByAnimal(animal));*/
+		this.personRepository.supprimerPersonnerSansAnimaux();
+		this.personRepository.genererEntites(3);
+		System.out.println("toutes les personnes : " + this.personRepository.findAll());
 
 
 	}

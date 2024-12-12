@@ -8,6 +8,7 @@ import java.util.Set;
 @Table(name = "person")
 public class person {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
     @Column(columnDefinition = "int", nullable = true)
@@ -29,5 +30,13 @@ public class person {
                 ", lastname='" + lastname + '\'' +
                 ", animals=" + animals +
                 '}';
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }
