@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Repository
 public interface PersonRepository extends CrudRepository<person,Integer>, PersonRepositoryCustom {
+    public Set<person> findAll();
     @Query("From person WHERE firstname = :firstname AND lastname = :lastName")
     public Set<person> findAllByFirstnameOrLastname(@Param("firstname") String firstName, @Param("lastName") String lastName);
     @Query("From person WHERE age = :age")

@@ -13,6 +13,7 @@ import java.util.Set;
 
 public interface AnimalRepository extends CrudRepository<animal, Integer> {
     public animal findFirstById(Integer id);
+    public Set<animal> findAll();
     @Query("From animal WHERE name = :name")
     public Set<animal> findAllByName(@Param("name") String name);
     @Query("From animal a INNER JOIN a.specie s WHERE s = :Espece")

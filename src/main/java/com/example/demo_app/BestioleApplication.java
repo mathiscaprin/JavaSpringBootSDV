@@ -53,8 +53,8 @@ public class BestioleApplication implements CommandLineRunner {
 
 		System.out.println("Animal par sex : " + this.animalRepository.countAllBySex("M"));
 		System.out.println("Appartient à une personne : " + this.animalRepository.existsByAnimal(animal));*/
-		this.personRepository.supprimerPersonnerSansAnimaux();
-		this.personRepository.genererEntites(3);
+		//this.personRepository.supprimerPersonnerSansAnimaux();
+		//this.personRepository.genererEntites(3);
 		System.out.println("toutes les personnes : " + this.personRepository.findAll());
 
 

@@ -11,6 +11,8 @@ import java.util.Set;
 
 @Repository
 public interface SpeciesRepository extends CrudRepository<species,Integer> {
+
+    public Set<species> findAll();
     @Query("From species WHERE commonName = :CommonName")
     public species findFirstByCommonName(@Param("CommonName") String CommonName);
     @Query("From species WHERE latinName = :LatinName")
