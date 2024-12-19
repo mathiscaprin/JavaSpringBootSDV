@@ -6,12 +6,14 @@ import com.example.demo_app.service.AnimalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/rest/animal")
@@ -36,7 +38,13 @@ public class AnimalController {
     }
 
     @GetMapping
-    public Set<animal> findAll() {
+    public List<animal> findAll() {
         return this.animalService.findAll();
+    }
+    
+    @GetMapping("/page")
+    public Page<animal> findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return this.animalService.findPage(pageable);
     }
 }

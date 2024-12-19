@@ -1,13 +1,16 @@
 package com.example.demo_app.service;
 
+import com.example.demo_app.modele.person;
 import com.example.demo_app.modele.species;
 import com.example.demo_app.repository.SpeciesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 @Service
 public class SpecieService {
     @Autowired
@@ -21,10 +24,13 @@ public class SpecieService {
     public void delete(@Valid species deletedSpecies) {
         this.speciesRepository.delete(deletedSpecies);
     }
-    public Set<species> findAll() {
+    public List<species> findAll() {
         return this.speciesRepository.findAll();
     }
     public species findById(Integer id) {
         return this.speciesRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+    public Page<species> findPage(Pageable pageable) {
+        return this.speciesRepository.findAll(pageable);
     }
 }

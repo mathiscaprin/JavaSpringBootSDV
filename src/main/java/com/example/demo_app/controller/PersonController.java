@@ -1,17 +1,20 @@
 package com.example.demo_app.controller;
 
+import com.example.demo_app.modele.animal;
 import com.example.demo_app.modele.person;
 import com.example.demo_app.repository.PersonRepository;
 import com.example.demo_app.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/rest/person")
@@ -36,7 +39,12 @@ public class PersonController {
     }
 
     @GetMapping
-    public Set<person> findAll() {
+    public List<person> findAll() {
         return this.personService.findAll();
+    }
+    @GetMapping("/page")
+    public Page<person> findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return this.personService.findPage(pageable);
     }
 }

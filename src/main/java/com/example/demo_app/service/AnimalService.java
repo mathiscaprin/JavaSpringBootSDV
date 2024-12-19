@@ -7,9 +7,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class AnimalService {
@@ -24,10 +24,13 @@ public class AnimalService {
     public void delete(@Valid animal deletedAnimal) {
         this.animalRepository.delete(deletedAnimal);
     }
-    public Set<animal> findAll() {
-        return this.animalRepository.findAll();
+    public List<animal> findAll() {
+        return (List<animal>) this.animalRepository.findAll();
     }
     public animal findById(Integer id) {
         return this.animalRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+    public Page<animal> findPage(Pageable pageable) {
+        return this.animalRepository.findAll(pageable);
     }
 }
