@@ -25,6 +25,8 @@ public class SpecieService {
         }
     }
     public species update(@Valid species updatedSpecies) {
+        findById(updatedSpecies.getId());
+
         if (updatedSpecies.getId() == null){
             throw new EntityToUpdateHasNoIdException("l'espece doit avoir un id");
         }else{
@@ -32,6 +34,7 @@ public class SpecieService {
         }
     }
     public void delete(@Valid species deletedSpecies) {
+        findById(deletedSpecies.getId());
         this.speciesRepository.delete(deletedSpecies);
     }
     public List<species> findAll() {

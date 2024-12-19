@@ -27,6 +27,8 @@ public class PersonService {
         }
     }
     public person update(@Valid person updatedPerson) {
+        findById(updatedPerson.getId());
+
         if (updatedPerson.getId() == null){
             throw new EntityToUpdateHasNoIdException("la personne doit avoir un id");
         }else{
@@ -34,7 +36,9 @@ public class PersonService {
         }
     }
     public void delete(@Valid person deletedPerson) {
-            this.personRepository.delete(deletedPerson);
+        findById(deletedPerson.getId());
+
+        this.personRepository.delete(deletedPerson);
     }
    public List<person> findAll() {
         return this.personRepository.findAll();

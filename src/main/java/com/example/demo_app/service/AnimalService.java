@@ -25,6 +25,7 @@ public class AnimalService {
         }
     }
     public animal update(@Valid animal updatedAnimal) {
+        findById(updatedAnimal.getId());
         if (updatedAnimal.getId() == null){
             throw new EntityToUpdateHasNoIdException("l'animal doit avoir un id");
         }else{
@@ -32,6 +33,7 @@ public class AnimalService {
         }
     }
     public void delete(@Valid animal deletedAnimal) {
+        findById(deletedAnimal.getId());
         this.animalRepository.delete(deletedAnimal);
     }
     public List<animal> findAll() {
