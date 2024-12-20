@@ -2,6 +2,7 @@ package com.example.demo_app.modele;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,7 @@ public class person {
     private String lastname;
 
     @ManyToMany(mappedBy = "linkedPerson", fetch = FetchType.EAGER)
-    Set<animal> animals;
+    List<animal> animals;
 
     @Override
     public String toString() {
@@ -62,5 +63,9 @@ public class person {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public List<animal> getAnimals() {
+        return animals;
     }
 }

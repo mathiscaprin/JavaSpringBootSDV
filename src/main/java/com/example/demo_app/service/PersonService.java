@@ -1,7 +1,9 @@
 package com.example.demo_app.service;
 
+import com.example.demo_app.controller.PersonDTO;
 import com.example.demo_app.exceptions.EntityToCreateHasAnIdException;
 import com.example.demo_app.exceptions.EntityToUpdateHasNoIdException;
+import com.example.demo_app.mappers.PersonMapper;
 import com.example.demo_app.modele.animal;
 import com.example.demo_app.modele.person;
 import com.example.demo_app.repository.PersonRepository;
@@ -12,12 +14,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class PersonService {
     @Autowired
     PersonRepository personRepository;
+    @Autowired
+    PersonMapper personMapper;
     public person create(@Valid person personToCreate) {
         if (personToCreate.getId() != null){
             throw new EntityToCreateHasAnIdException("la personne ne doit pas avoir d'id");
@@ -40,13 +45,22 @@ public class PersonService {
 
         this.personRepository.delete(deletedPerson);
     }
-   public List<person> findAll() {
-        return this.personRepository.findAll();
+   public List<PersonDTO> findAll() {
+
+       List<person> persons = this.personRepository.findAll();
+        List<PersonDTO> personsDTO = new java.util.ArrayList<>();
+        persons.forEach(person -> {
+            personsDTO.add(personMapper.toDto(person));
+        });
+        return personsDTO;
     }
     public person findById(Integer id) {
         return this.personRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
-    public Page<person> findPage(Pageable pageable) {
-        return this.personRepository.findAll(pageable);
+    public Page<PersonDTO> findPage(Pageable pageable) {
+        Page<person> persons = this.personRepository.findAll(pageable);
+        return persons.map(person -> {
+            return personMapper.toDto(person);
+        });
     }
 }

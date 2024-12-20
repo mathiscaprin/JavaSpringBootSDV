@@ -1,8 +1,12 @@
 package com.example.demo_app.service;
 
+import com.example.demo_app.controller.AnimalDTO;
+import com.example.demo_app.controller.PersonDTO;
 import com.example.demo_app.exceptions.EntityToCreateHasAnIdException;
 import com.example.demo_app.exceptions.EntityToUpdateHasNoIdException;
+import com.example.demo_app.mappers.AnimalMapper;
 import com.example.demo_app.modele.animal;
+import com.example.demo_app.modele.person;
 import com.example.demo_app.repository.AnimalRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -17,6 +21,8 @@ import java.util.List;
 public class AnimalService {
     @Autowired
     AnimalRepository animalRepository;
+    @Autowired
+    AnimalMapper animalMapper;
     public animal create(@Valid animal animalToCreate) {
         if (animalToCreate.getId() != null){
             throw new EntityToCreateHasAnIdException("l'animal ne doit pas avoir d'id");
@@ -36,13 +42,21 @@ public class AnimalService {
         findById(deletedAnimal.getId());
         this.animalRepository.delete(deletedAnimal);
     }
-    public List<animal> findAll() {
-        return (List<animal>) this.animalRepository.findAll();
+    public List<AnimalDTO> findAll() {
+        List<animal> animals = this.animalRepository.findAll();
+        List<AnimalDTO> animalsDTO = new java.util.ArrayList<>();
+        animals.forEach(animal -> {
+            animalsDTO.add(animalMapper.toDto(animal));
+        });
+        return animalsDTO;
     }
     public animal findById(Integer id) {
         return this.animalRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
-    public Page<animal> findPage(Pageable pageable) {
-        return this.animalRepository.findAll(pageable);
+    public Page<AnimalDTO> findPage(Pageable pageable) {
+        Page<animal> animals = this.animalRepository.findAll(pageable);
+        return animals.map(
+                animal -> animalMapper.toDto(animal)
+        );
     }
 }

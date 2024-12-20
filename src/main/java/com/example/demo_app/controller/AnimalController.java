@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService = new AnimalService();
     @PostMapping
-    public animal createAnimal(@RequestBody @Valid animal animalToCreate) {
+    public animal createAnimal(@RequestBody @Valid animal animalToCreate, BindingResult result) {
         return this.animalService.create(animalToCreate);
     }
     @PutMapping
@@ -38,12 +39,12 @@ public class AnimalController {
     }
 
     @GetMapping
-    public List<animal> findAll() {
+    public List<AnimalDTO> findAll() {
         return this.animalService.findAll();
     }
     
     @GetMapping("/page")
-    public Page<animal> findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+    public Page<AnimalDTO> findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return this.animalService.findPage(pageable);
     }

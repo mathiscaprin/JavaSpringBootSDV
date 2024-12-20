@@ -72,4 +72,8 @@ public class animal {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public species getSpecie() {
+        return specie;
+    }
 }

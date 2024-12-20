@@ -39,11 +39,11 @@ public class PersonController {
     }
 
     @GetMapping
-    public List<person> findAll() {
+    public List<PersonDTO> findAll() {
         return this.personService.findAll();
     }
     @GetMapping("/page")
-    public Page<person> findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
+    public Page<PersonDTO> findPage(@RequestParam(value = "pageNumber", defaultValue = "0") Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return this.personService.findPage(pageable);
     }
